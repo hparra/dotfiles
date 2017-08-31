@@ -1,4 +1,9 @@
 # -*- mode: gitignore; -*-
+
+#
+# Emacs
+#
+
 *~
 \#*\#
 /.emacs.desktop
@@ -43,3 +48,10 @@ flycheck_*.el
 
 # directory configuration
 .dir-locals.el
+
+#
+# Other
+#
+
+# installation specific
+.emacs.d/custom.el

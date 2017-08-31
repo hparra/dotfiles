@@ -1,4 +1,4 @@
-;;emacs
+;; dotfiles/emacs.d/init.el
 
 ;; bind UNIX C-h as delete char
 (global-set-key (kbd "C-h") 'delete-backward-char)
@@ -20,6 +20,9 @@
 (defun track-mouse (e))
 (put 'set-goal-column 'disabled nil)
 
+;; Add line-numbers in all programming modes
+(add-hook 'prog-mode-hook 'linum-mode)
+
 ;; MELPA
 (require 'package) ;; You might already have this line
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -34,16 +37,9 @@
 ;; Load theme
 (load-theme 'atom-one-dark t)
 
-;; Add line-numbers in all programming modes
-(add-hook 'prog-mode-hook 'linum-mode)
-
 ;; magit
 ;; http://magit.vc/
 (require 'magit)
-
-;; Python
-(elpy-enable)
-(setq elpy-test-django-with-manage t)
 
 ;; Multiple cursors
 (require 'multiple-cursors)
@@ -52,23 +48,42 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+;; 
+;; Python
+;; 
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(column-number-mode t)
- '(custom-safe-themes
-   (quote
-    ("4904daa168519536b08ca4655d798ca0fb50d3545e6244cefcf7d0c7b338af7e" default)))
- '(flymake-gui-warnings-enabled nil)
- '(package-selected-packages
-   (quote
-    (multiple-cursors jedi-direx elpy window-numbering markdown-mode magit dracula-theme atom-one-dark-theme arjen-grey-theme))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(elpy-enable)
+(setq elpy-test-django-with-manage t)
+
+;;
+;; Thrift
+;;
+
+;; Set Thrift file indent to 4 (whoops)
+(defvar thrift-indent-level 4)
+
+;;
+;; Golang
+;;
+
+;; eldoc for go
+(require 'go-eldoc)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+
+;; direx for go
+(require 'go-direx)
+
+;; guru
+(require 'go-guru)
+(add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
+
+;; go-autocomplete
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+
+;; Write custom-set-variable and custom-set-faces elsewhere
+;; https://www.reddit.com/r/emacs/comments/53zpv9/how_do_i_get_emacs_to_stop_adding_custom_fields/
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file :noerror)
+      

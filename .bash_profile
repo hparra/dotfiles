@@ -1,8 +1,13 @@
+echo "Sourcing dotfiles .bash_profile"
 
 export EDITOR=emacs
 export PAGER=less
 
+export TERM=xterm-256color
 ITERM_24BIT=1
+
+# Prepend date to `history` command.
+export HISTTIMEFORMAT="%Y-%m-%dT%H:%M:%SZ  "
 
 
 # GIT
