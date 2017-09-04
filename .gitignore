@@ -55,3 +55,4 @@ flycheck_*.el
 
 # installation specific
 .emacs.d/custom.el
+.emacs.d/network-security.data

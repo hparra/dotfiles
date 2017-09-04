@@ -11,8 +11,9 @@
 
 ;; hide menu, tool, and scroll bar
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1)) 
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(setq inhibit-startup-screen t)
 
 ;; Enable mouse support
 (require 'mouse)
@@ -20,7 +21,13 @@
 (defun track-mouse (e))
 (put 'set-goal-column 'disabled nil)
 
-;; Add line-numbers in all programming modes
+;; set tab width
+(setq tab-width 2)
+
+;; diable word wrap
+(setq-default truncate-lines 1)
+
+;; add line-numbers in all programming modes
 (add-hook 'prog-mode-hook 'linum-mode)
 
 ;; MELPA
@@ -43,10 +50,12 @@
 
 ;; Multiple cursors
 (require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "s-d") 'mc/mark-next-like-this) ; like Atom
+;;(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+;;(global-set-key (kbd "S-s-g") 'mc/mark-all-like-this)
+
+;; like Atom
+(global-set-key (kbd "s-\\") 'neotree-toggle)
 
 ;; 
 ;; Python
