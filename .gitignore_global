@@ -1,0 +1,17 @@
+#
+# Global .gitignore
+#
+# Set this using:
+#     git config --global core.excludesfile ~/.dotfiles/.gitignore_global
+#
+
+# Mac OS X Trash
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+
+# Emacs Trash
+*~
+\#*\#
+.\#*
