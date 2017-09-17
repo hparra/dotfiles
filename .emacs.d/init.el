@@ -11,7 +11,7 @@
 
 ;; hide menu, tool, and scroll bar
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1)) 
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (setq inhibit-startup-screen t)
 
@@ -24,8 +24,13 @@
 ;; set tab width
 (setq tab-width 2)
 
-;; diable word wrap
+;; disable word wrap
 (setq-default truncate-lines 1)
+
+;; visualize whitespace
+(setq-default show-trailing-whitespace t)
+(setq whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark))
+
 
 ;; add line-numbers in all programming modes
 (add-hook 'prog-mode-hook 'linum-mode)
@@ -49,6 +54,7 @@
 (require 'magit)
 
 ;; Multiple cursors
+
 (require 'multiple-cursors)
 (global-set-key (kbd "s-d") 'mc/mark-next-like-this) ; like Atom
 ;;(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -57,9 +63,20 @@
 ;; like Atom
 (global-set-key (kbd "s-\\") 'neotree-toggle)
 
-;; 
+;;
+;; JSON
+;;
+
+;; Enable json linting
+;; pip install demjson
+(require 'flycheck-demjsonlint)
+
+;; Enable flycheck for json
+(add-hook 'json-mode-hook #'flycheck-mode)
+
+;;
 ;; Python
-;; 
+;;
 
 (elpy-enable)
 (setq elpy-test-django-with-manage t)
@@ -95,4 +112,4 @@
 ;; https://www.reddit.com/r/emacs/comments/53zpv9/how_do_i_get_emacs_to_stop_adding_custom_fields/
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file :noerror)
-      
+
