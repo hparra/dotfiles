@@ -43,10 +43,14 @@
 (require 'dired-details)
 (setq-default dired-details-hidden-string "")
 (dired-details-install)
+(setq dired-dwim-target t)
 
 ;; magit
 ;; http://magit.vc/
 (require 'magit)
+
+;; diff-hl
+(global-diff-hl-mode)
 
 ;; Multiple cursors
 (require 'multiple-cursors)
