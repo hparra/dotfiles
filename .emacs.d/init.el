@@ -10,7 +10,7 @@
 (global-set-key (kbd "M-?") 'mark-paragraph)
 
 ;; hide menu, tool, and scroll bar
-(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+;; (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (setq inhibit-startup-screen t)
@@ -20,20 +20,6 @@
 (xterm-mouse-mode t)
 (defun track-mouse (e))
 (put 'set-goal-column 'disabled nil)
-
-;; set tab width
-(setq tab-width 2)
-
-;; disable word wrap
-(setq-default truncate-lines 1)
-
-;; visualize whitespace
-(setq-default show-trailing-whitespace t)
-(setq whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark))
-
-
-;; add line-numbers in all programming modes
-(add-hook 'prog-mode-hook 'linum-mode)
 
 ;; MELPA
 (require 'package) ;; You might already have this line
@@ -48,13 +34,21 @@
 
 ;; Load theme
 (load-theme 'atom-one-dark t)
+(custom-theme-set-faces
+ 'atom-one-dark
+ `(col-highlight ((t (:background "#2F343D")))))
+
+;; dired
+(setq dired-omit-mode t)			 ; Hide emacs backup and autosave files.
+(require 'dired-details)
+(setq-default dired-details-hidden-string "")
+(dired-details-install)
 
 ;; magit
 ;; http://magit.vc/
 (require 'magit)
 
 ;; Multiple cursors
-
 (require 'multiple-cursors)
 (global-set-key (kbd "s-d") 'mc/mark-next-like-this) ; like Atom
 ;;(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
@@ -63,50 +57,29 @@
 ;; like Atom
 (global-set-key (kbd "s-\\") 'neotree-toggle)
 
-;;
-;; JSON
-;;
+(add-hook 'prog-mode-hook crosshairs-mode)
+(setq col-highlight-vline-face-flag t) ; Necessary for col-highlight to work.
 
-;; Enable json linting
-;; pip install demjson
-(require 'flycheck-demjsonlint)
+;; Font
+(setq mac-allow-anti-aliasing t)
+(set-face-attribute 'default nil
+		    :family "Andale Mono"
+		    :weight 'normal)
 
-;; Enable flycheck for json
-(add-hook 'json-mode-hook #'flycheck-mode)
+(setq tab-width 2)											; set tab width
+(setq-default truncate-lines 1)					; disable word wrap
 
-;;
-;; Python
-;;
+;; visualize whitespace
+(setq-default show-trailing-whitespace t)
+(setq whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark))
 
-(elpy-enable)
-(setq elpy-test-django-with-manage t)
+;; add line-numbers in all programming modes
+(add-hook 'prog-mode-hook 'linum-mode)
 
-;;
-;; Thrift
-;;
-
-;; Set Thrift file indent to 4 (whoops)
-(defvar thrift-indent-level 4)
-
-;;
-;; Golang
-;;
-
-;; eldoc for go
-(require 'go-eldoc)
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-
-;; direx for go
-(require 'go-direx)
-
-;; guru
-(require 'go-guru)
-(add-hook 'go-mode-hook #'go-guru-hl-identifier-mode)
-
-;; go-autocomplete
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
+(load "~/.emacs.d/scripts/golang.el")			; Go
+(load "~/.emacs.d/scripts/javascript.el")	; JS
+(load "~/.emacs.d/scripts/python.el")			; Python
+(load "~/.emacs.d/scripts/thrift.el")			; Thrift
 
 ;; Write custom-set-variable and custom-set-faces elsewhere
 ;; https://www.reddit.com/r/emacs/comments/53zpv9/how_do_i_get_emacs_to_stop_adding_custom_fields/
