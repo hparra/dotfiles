@@ -54,6 +54,7 @@
 
 ;; diff-hl
 (global-diff-hl-mode)
+(diff-hl-flydiff-mode 1)
 
 ;; Multiple cursors
 (require 'multiple-cursors)
