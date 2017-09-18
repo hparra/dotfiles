@@ -21,6 +21,9 @@
 (defun track-mouse (e))
 (put 'set-goal-column 'disabled nil)
 
+;; Always treat underscore as part of word
+(modify-syntax-entry ?_ "w" (standard-syntax-table))
+
 ;; MELPA
 (require 'package) ;; You might already have this line
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -54,9 +57,9 @@
 
 ;; Multiple cursors
 (require 'multiple-cursors)
-(global-set-key (kbd "s-d") 'mc/mark-next-like-this) ; like Atom
-;;(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-;;(global-set-key (kbd "S-s-g") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "S-s-g") 'mc/mark-all-like-this) ; like Atom
 
 ;; like Atom
 (global-set-key (kbd "s-\\") 'neotree-toggle)
