@@ -24,6 +24,19 @@
 ;; Always treat underscore as part of word
 (modify-syntax-entry ?_ "w" (standard-syntax-table))
 
+;; Font
+(setq mac-allow-anti-aliasing t)
+(set-face-attribute 'default nil
+		    :family "Andale Mono"
+		    :weight 'normal)
+
+(setq default-tab-width 2)		; Tabs look like two spaces.
+(setq-default truncate-lines 1)		; disable word wrap
+
+;; visualize whitespace
+(setq-default show-trailing-whitespace t)
+(setq whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark))
+
 ;; MELPA
 (require 'package) ;; You might already have this line
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -35,11 +48,14 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize) ;; You might already have this line
 
-;; Load theme
-(load-theme 'atom-one-dark t)
-(custom-theme-set-faces
- 'atom-one-dark
- `(col-highlight ((t (:background "#2F343D")))))
+;; Set different settings for GUI versus terminal.
+(if (display-graphic-p)			;; if GUI
+    (progn
+			(load-theme 'atom-one-dark t)
+			(custom-theme-set-faces
+			 'atom-one-dark
+			 `(col-highlight ((t (:background "#2F343D"))))))
+	(load-theme 'wombat t))
 
 ;; dired
 (setq dired-omit-mode t)			 ; Hide emacs backup and autosave files.
@@ -51,6 +67,7 @@
 ;; magit
 ;; http://magit.vc/
 (require 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; diff-hl
 (global-diff-hl-mode)
@@ -65,24 +82,19 @@
 ;; like Atom
 (global-set-key (kbd "s-\\") 'neotree-toggle)
 
-(add-hook 'prog-mode-hook crosshairs-mode)
-(setq col-highlight-vline-face-flag t) ; Necessary for col-highlight to work.
+;; Highlight current line.
+(global-hl-line-mode +1)
 
-;; Font
-(setq mac-allow-anti-aliasing t)
-(set-face-attribute 'default nil
-		    :family "Andale Mono"
-		    :weight 'normal)
+;; Crosshairs
+;; NOTE: This stopped working sometime ago for unknown reasons
+;; (setq col-highlight-vline-face-flag t) ; Necessary for col-highlight to work.
+;; (add-hook 'prog-mode-hook crosshairs-mode)
 
-(setq tab-width 2)											; set tab width
-(setq-default truncate-lines 1)					; disable word wrap
+(require 'column-marker)
+(add-hook 'prog-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
-;; visualize whitespace
-(setq-default show-trailing-whitespace t)
-(setq whitespace-style '(spaces tabs newline space-mark tab-mark newline-mark))
-
-;; add line-numbers in all programming modes
-(add-hook 'prog-mode-hook 'linum-mode)
+;; Add line-numbers in all text modes.
+(add-hook 'text-mode-hook 'linum-mode)
 
 (load "~/.emacs.d/scripts/golang.el")			; Go
 (load "~/.emacs.d/scripts/javascript.el")	; JS
