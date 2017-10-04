@@ -90,8 +90,9 @@
 ;; (setq col-highlight-vline-face-flag t) ; Necessary for col-highlight to work.
 ;; (add-hook 'prog-mode-hook crosshairs-mode)
 
-(require 'column-marker)
-(add-hook 'prog-mode-hook (lambda () (interactive) (column-marker-1 80)))
+;; Mark lines at location where they pass n-column.
+;; (require 'column-marker)
+;; (add-hook 'prog-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
 ;; Add line-numbers in all text modes.
 (add-hook 'text-mode-hook 'linum-mode)
