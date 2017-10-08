@@ -47,6 +47,21 @@
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize) ;; You might already have this line
+(package-refresh-contents)
+
+;; Fix $PATH
+(package-install 'exec-path-from-shell)
+(exec-path-from-shell-initialize)
+(exec-path-from-shell-copy-env "GOPATH")
+
+;; Flycheck
+(package-install 'flycheck)
+(global-flycheck-mode)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(package-install 'yasnippet)
+(require 'yasnippet)
+(yas-global-mode 1)
 
 ;; Set different settings for GUI versus terminal.
 (if (display-graphic-p)			;; if GUI
@@ -95,7 +110,7 @@
 ;; (add-hook 'prog-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
 ;; Add line-numbers in all text modes.
-(add-hook 'text-mode-hook 'linum-mode)
+(add-hook 'text-mode-hook 'nlinum-mode)
 
 (load "~/.emacs.d/scripts/golang.el")			; Go
 (load "~/.emacs.d/scripts/javascript.el")	; JS
