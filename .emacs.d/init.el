@@ -110,7 +110,11 @@
 ;; (add-hook 'prog-mode-hook (lambda () (interactive) (column-marker-1 80)))
 
 ;; Add line-numbers in all text modes.
+;; NOTE: some prog modes are not text modes?
+(package-install 'nlinum)
 (add-hook 'text-mode-hook 'nlinum-mode)
+(add-hook 'prog-mode-hook 'nlinum-mode)
+
 
 (load "~/.emacs.d/scripts/golang.el")			; Go
 (load "~/.emacs.d/scripts/javascript.el")	; JS
